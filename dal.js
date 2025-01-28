@@ -32,10 +32,10 @@ const connectedKnex = knex({
 })
 
 async function create_table_if_not_exist() {
-    const tableExists = await connectedKnex.schema.hasTable('CHAT');
+    const tableExists = await connectedKnex.schema.hasTable('FLIGHT');
 
     if (!tableExists) {
-      await connectedKnex.schema.createTable('CHAT', (table) => {
+      await connectedKnex.schema.createTable('FLIGHT', (table) => {
         table.increments('ID').primary(); // This creates a SERIAL column
         table.string('NAME').notNullable();
         table.timestamp('TIME').notNullable();
@@ -53,37 +53,37 @@ create_table()
 
 async function delete_all() {
     // db.run('update chat ....')
-    const result = await connectedKnex('CHAT').del()
-    await connectedKnex.raw('ALTER SEQUENCE "CHAT_ID_seq" RESTART WITH 1');
+    const result = await connectedKnex('FLIGHT').del()
+    await connectedKnex.raw('ALTER SEQUENCE "FLIGHT_ID_seq" RESTART WITH 1');
     return result    
 }
 
 async function get_all() {
     // db.run('select * from chat')
-    const users = await connectedKnex('CHAT').select('*')
+    const users = await connectedKnex('FLIGHT').select('*')
     return users
 }
 
 async function get_by_id(id) {
     // db.run('select * from company where id=?')
-    const user = await connectedKnex('CHAT').select('*').where('ID', id).first()
+    const user = await connectedKnex('FLIGHT').select('*').where('ID', id).first()
     return user
 }
 async function new_message(new_user_message) {
     console.log("new userName",new_userName); // לבדוק מה באמת מתקבל
-    const result = await connectedKnex('CHAT').insert(new_user_message);
+    const result = await connectedKnex('FLIGHT').insert(new_user_message);
     return { ...new_user_message, ID: result[0] }
 }
 
 async function update_user(id, updated_user) {
     // db.run('update company ....')
-    const result = await connectedKnex('CHAT').where('ID', id).update(updated_user)
+    const result = await connectedKnex('FLIGHT').where('ID', id).update(updated_user)
     return updated_user
 }
 
 async function delete_user(id) {
     // db.run('update company ....')
-    const result = await connectedKnex('CHAT').where('ID', id).del()
+    const result = await connectedKnex('FLIGHT').where('ID', id).del()
     return result
 }
 
