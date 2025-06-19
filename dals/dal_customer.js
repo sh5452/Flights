@@ -1,7 +1,7 @@
 const knex=require('../db/knex')
 
 async function createCustomerTabaleIfNotExist(){
-    const tableExist=await knex.schema.createTable('customers');
+    const tableExist=await knex.schema.hasTable('customers');
     if(!tableExist){
         knex.schema.createTable('customers', (table)=>{
         table.increments('id'),primary();

@@ -1,7 +1,7 @@
 const knex=require('../db/knex')
 
 async function createAirlineTableIfNotExist(){
-    const tableExist=knex.schema.createTable('airline')
+    const tableExist=knex.schema.hasTable('airline')
     if(!tableExist){
         knex.schema.createTable('airline', (table)=>{
             table.increment('id').primary()
